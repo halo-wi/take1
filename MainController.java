@@ -6,23 +6,23 @@ import MeetingReservationModel.DepartmentsDAO;
 import MeetingReservationModel.DepartmentsVO;
 import MeetingReservationModel.EmployeesDAO;
 import MeetingReservationModel.EmployeesVO;
-import MeetingReservationModel.MeetingReservationDAO;
-import MeetingReservationModel.MeetingReservationVO;
 import MeetingReservationModel.MeetingRoomsDAO;
 import MeetingReservationModel.MeetingRoomsVO;
-import MeetingReservationModel.MeetingTimeDAO;
-import MeetingReservationModel.MeetingTimeVO;
+import MeetingReservationModel.MeetingDAO;
+import MeetingReservationModel.MeetingVO;
+import MeetingReservationModel.ScheduleCreateDAO;
 import MeetingReservationView.MeetingBookView;
-import model.BoardVO;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.Scanner;
 
 public class MainController {
 
-	public static void main(String[] args) throws SQLException, IOException {
+	public static void main(String[] args) throws SQLException, IOException, ParseException {
 		int result = 0;
 
 		MeetingBookView vi = new MeetingBookView();
@@ -31,21 +31,21 @@ public class MainController {
 		AdminsDAO adminDAO = new AdminsDAO();
 		DepartmentsDAO departmentDAO = new DepartmentsDAO();
 		EmployeesDAO employeeDAO = new EmployeesDAO();
-		MeetingReservationDAO reservationDAO = new MeetingReservationDAO();
-		MeetingTimeDAO timeDAO = new MeetingTimeDAO();
+		MeetingDAO reservationDAO = new MeetingDAO();
+		MeetingDAO timeDAO = new MeetingDAO();
 		MeetingRoomsDAO roomDAO = new MeetingRoomsDAO();
 
 		AdminsVO admin = null;
 		DepartmentsVO dept = null;
 		EmployeesVO emp = null;
-		MeetingReservationVO reservation = null;
-		MeetingTimeVO time = null;
+		MeetingVO met = null;
+		MeetingVO time = null;
 		MeetingRoomsVO room = null;
 
 		boolean on = true;
 
 		while (on) {
-			System.out.println("****회의실 자동 예약 프로그램****");
+			System.out.println("******회의실 예약 프로그램******");
 			System.out.println("**********메뉴 선택**********");
 			System.out.println("1. 직원 로그인");
 			System.out.println("9. 종료");
@@ -77,13 +77,13 @@ public class MainController {
 				vi.showLoginResult(i);
 				if (i == 1) {
 					System.out.println("**********메뉴 선택**********");
-					System.out.println("1. 회의 스케쥴 입력");
+					System.out.println("1. 회의 스케쥴 보기");
 					System.out.println("2. 신규 회의 생성");
 					int choice = sc.nextInt();
 					if (choice == 1)
-						employeeDAO.schdule();
+						MeetingRoomsDAO.room_Allsearch();
 					if (choice == 2)
-						employeeDAO.creat_meeting();
+						vi.showme(ScheduleCreateDAO.creat_meeting());
 				}
 			if (work == 9) System.exit(0);
 			}
